@@ -6,6 +6,7 @@ import soot.jimple.toolkits.callgraph.*;
 import java.util.*;
 
 public class DeadCodePaths {
+
 	
 	public static void main(String[] args) {
 		
@@ -40,6 +41,7 @@ public class DeadCodePaths {
 				}
 			}
 		}
+		for (String method : availableMethods) {
 			System.out.print(method);
 			System.out.print(" not found in call graph\n");
 		}
