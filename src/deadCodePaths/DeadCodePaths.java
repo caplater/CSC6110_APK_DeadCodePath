@@ -6,7 +6,6 @@ import soot.jimple.toolkits.callgraph.*;
 import java.util.*;
 
 public class DeadCodePaths {
-
 	
 	public static void main(String[] args) {
 		
@@ -29,11 +28,6 @@ public class DeadCodePaths {
 				if (! availableMethods.contains(methods.getName())) 
 					availableMethods.add(methods.getName());
 				}
-//				System.out.print(methods.getName());
-//				System.out.print(" : ");
-//				System.out.print(methods.getDeclaringClass());
-//				System.out.print("\n");
-//			}
 		}
 		CallGraph appCallGraph = Scene.v().getCallGraph();
 		for (Edge edge : appCallGraph) {
@@ -44,34 +38,10 @@ public class DeadCodePaths {
 				if (availableMethods.contains(edge.getSrc().method().getName())) {
 					availableMethods.remove(edge.getSrc().method().getName());
 				}
-				
-				
-				//				System.out.print(edge.getTgt().method().getDeclaringClass());
-//				System.out.print(".");
-//				System.out.print(edge.getTgt().method().getName());
-//				System.out.print(" called\n");
-
-			} //else {
-//				System.out.print("FALSE");
-//				System.out.print("\n");
-//			}
-			
-//			System.out.print(edge.getTgt().method().getName());
-//			System.out.print(" : ");
-//			System.out.print(edge.getTgt().method().getDeclaringClass());
-//			System.out.print("\n");
+			}
 		}
-//		for (Edge cg : appCallGraph) {
-//			System.out.print(cg.getSrc().method());
-////			System.out.print(cg);
-//			System.out.print("\n");
-//		}
-//		System.out.print(appCallGraph);
-		for (String method : availableMethods) {
 			System.out.print(method);
 			System.out.print(" not found in call graph\n");
 		}
-		
-
 	}
 }
