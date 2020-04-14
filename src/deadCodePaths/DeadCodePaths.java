@@ -16,22 +16,47 @@ package deadCodePaths;
 import soot.*;
 import soot.jimple.infoflow.android.*;
 import soot.jimple.toolkits.callgraph.*;
+import java.util.stream.*;
 import java.util.*;
+import java.nio.file.*;
+import java.io.*;
+// import java.nio.file.Files;
 
 public class DeadCodePaths {
 
 	
 	public static void main(String[] args) {
 		
-		String androidPlatformPath = "/Users/cplater/Developer/android-platforms";
+		// String androidPlatformPath = "/Users/cplater/Developer/android-platforms";
+		String androidPlatformPath = "/home/marek/Downloads/csc6110/android-platforms-master";
 //		String appPath = "/Users/cplater/Documents/School/202001 Winter 2020/CSC 6110 Software Engineering/Homework 1/apks/two.apk";
 		String appPath = "/Users/cplater/Downloads/PUBG MOBILE_v0.17.0_apkpure.com.apk";
 		if (args.length == 2) {
 			androidPlatformPath = args[0];
 			appPath = args[1];
 		}
+
+		final String temp = androidPlatformPath;
+
+		try (Stream<Path> walk = Files.walk(Paths.get("/home/marek/Downloads/csc6110/apks2"))) {
+
+		List<String> result = walk.map(x -> x.toString())
+				.filter(f -> f.endsWith(".apk"))
+				.collect(Collectors.toList());
+
+		result.forEach(item->System.out.println(item));
+		System.out.println("\n-----------------");
+		result.forEach(item->chuck(temp, item));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		SetupApplication app = new SetupApplication(androidPlatformPath,appPath);
+	}
+
+	private static void chuck(String androidPlatformPath, String appPath)
+	{
+		SetupApplication app = new SetupApplication(androidPlatformPath, appPath);
 		
 		app.constructCallgraph();
 		// Create a list to store the method names
@@ -45,6 +70,13 @@ public class DeadCodePaths {
 					availableMethods.add(methods.getName());
 				}
 		}
+
+		System.out.println();
+		System.out.println("\n-----------------");
+		System.out.println(appPath);
+		System.out.println("\n-----------------");
+
+
 		System.out.printf("%d methods found.\n", availableMethods.size()); //("%n methods found.\n", availableMethods.size());
 		CallGraph appCallGraph = Scene.v().getCallGraph();
 		for (Edge edge : appCallGraph) {
@@ -64,5 +96,6 @@ public class DeadCodePaths {
 			System.out.print(method);
 			System.out.print(" not found in call graph\n");
 		}
+
 	}
 }

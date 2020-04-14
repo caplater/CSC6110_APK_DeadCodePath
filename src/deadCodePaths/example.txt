@@ -1,0 +1,2 @@
+javac -cp soot-infoflow-cmd-jar-with-dependencies.jar  DeadCodePaths.java
+java -cp soot-infoflow-cmd-jar-with-dependencies.jar  DeadCodePaths.java
