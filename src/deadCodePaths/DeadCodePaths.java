@@ -61,8 +61,6 @@ public class DeadCodePaths {
 		for (SootClass entryPoint : app.getEntrypointClasses()) {
 			for (SootMethod method : entryPoint.getMethods()) {
 				// Check to see if the method has already been added to the list
-				System.out.println(method.getDeclaration());
-				System.out.println(method.getJavaSourceStartColumnNumber());
 				if ((!availableMethods.contains(method.getDeclaration())
 						& (!method.getDeclaration().contains("android.content.Intent"))))
 					// Add the method to the list if it is new
